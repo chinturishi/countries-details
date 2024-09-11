@@ -6,9 +6,7 @@ const CountyCard = ({name,population,region,capital,flag}) => {
         <div className="card-text">
           <h3 className="card-title">{name}</h3>
           <p>
-            <b>Population: </b>{population.toLocaleString(
-                'en-IN'
-              )}
+            <b>Population: </b>{population}
           </p>
           <p>
             <b>Region: </b>{region}
