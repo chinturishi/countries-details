@@ -3,18 +3,20 @@ import SearchBar from "./components/SearchBar"
 import SelectMenu from "./components/SelectMenu"
 import './App.css'
 import CountriesList from "./components/CountriesList"
+import { useState } from "react"
 
 
 const App = () => {
+  const [query, setQuery] = useState('');
   return (
     <>
     <Header/>
     <main>
     <div className="search-filter-container">
-    <SearchBar/>
+    <SearchBar setQuery={setQuery}/>
     <SelectMenu/>
     </div>
-    <CountriesList/>
+    <CountriesList query={query}/>
     </main>
     </>
   )
