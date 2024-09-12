@@ -1,24 +1,16 @@
-import Header from "./components/Header"
-import SearchBar from "./components/SearchBar"
-import SelectMenu from "./components/SelectMenu"
+
 import './App.css'
-import CountriesList from "./components/CountriesList"
-import { useState } from "react"
+import { Outlet } from "react-router-dom"
+import Header from './components/Header'
 
 
 const App = () => {
-  const [query, setQuery] = useState('');
+  //const [query, setQuery] = useState('');
   return (
     <>
     <Header/>
-    <main>
-    <div className="search-filter-container">
-    <SearchBar setQuery={setQuery}/>
-    <SelectMenu/>
-    </div>
-    <CountriesList query={query}/>
-    </main>
-    </>
+    <Outlet/>
+   </>
   )
 }
 

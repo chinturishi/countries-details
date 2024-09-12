@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
+
 const CountyCard = ({name,population,region,capital,flag}) => {
   return (
     <div className="country-card">
-      <a href={`/country.html?name=${name}`}>
+      <Link to={`/country-detail?name=${name}`}>
         <img src={flag} alt={name} />
         <div className="card-text">
           <h3 className="card-title">{name}</h3>
@@ -17,7 +19,7 @@ const CountyCard = ({name,population,region,capital,flag}) => {
             <b>Capital: </b>{capital?.[0]}
           </p>
         </div>
-      </a>
+      </Link>
     </div>
   );
 };

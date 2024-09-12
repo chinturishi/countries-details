@@ -1,10 +1,33 @@
+import { useEffect, useState } from "react";
 import CountyCard from "./CountyCard";
-import countiesdata from "../countiesdata";
+//import countiesdata from "../countiesdata";
 
 const CountriesList = ({ query }) => {
+  const [countiesData, setcountiesData] = useState([]);
+  useEffect(() => {
+    fetch("https://restcountries.com/v3.1/all")
+      .then((res) => res.json())
+      .then((data) => {
+        setcountiesData(data);
+      });
+  },[]);
+
+  // if(countiesData.length===0){
+  //   fetch('https://restcountries.com/v3.1/all')
+  //   .then((res)=>res.json())
+  //   .then((data)=>{
+  //     setcountiesData(data);
+  //   })
+  // }
+  //Problem-1 allways calling
+  // fetch('https://restcountries.com/v3.1/all')
+  // .then((res)=>res.json())
+  // .then((data)=>{
+  //   console.log(countiesData);
+  // })
   return (
     <div className="countries-container">
-      {countiesdata
+      {countiesData
         .filter((country) =>
           country.name.common.toLocaleLowerCase().includes(query)
         )
