@@ -3,7 +3,7 @@ import Header from "./Header"
 
 const Error = () => {
     const error=useRouteError();
-    console.log(error);
+    //console.log(error);
   return (
     <>
     <Header/>

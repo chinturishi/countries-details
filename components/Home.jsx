@@ -6,14 +6,15 @@ import CountriesList from './CountriesList'
 
 const Home = () => {
     const [query, setQuery] = useState('');
+    const [region, setRegion] = useState('');
   return (
     <>
     <main>
     <div className="search-filter-container">
     <SearchBar setQuery={setQuery}/>
-    <SelectMenu/>
+    <SelectMenu setRegion={setRegion}/>
     </div>
-    <CountriesList query={query}/>
+    <CountriesList query={query} region={region}/>
     </main>
     </>
   )
