@@ -13,6 +13,7 @@ const CountriesList = ({ query,region }) => {
       });
   },[]);
   return (
+    countiesData.length === 0 ? "Loading........" :
     
     <div className="countries-container">
       {
@@ -30,6 +31,7 @@ const CountriesList = ({ query,region }) => {
               region={country.region}
               capital={country.capital}
               flag={country.flags.svg}
+              data={country}
             />
           );
         }) : countiesData.filter((country) =>

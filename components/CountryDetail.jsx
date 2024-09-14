@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./CountryDetail.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useOutletContext, useParams } from "react-router-dom";
 
 const CountryDetail = () => {
   // = new URLSearchParams(location.search).get("name");
@@ -9,42 +9,55 @@ const CountryDetail = () => {
   const countryName = params.country;
   //console.log(countryName);
   const [countyNotFound, setCountyNotFound] = useState(false);
+  const { state } = useLocation();
+  const [isDarkMode, setIsDarkMode] =useOutletContext();
+
+  function updateCountryData(data) {
+    setCountryData({
+      name: data.name.common,
+      nativeName: Object.values(data.name.nativeName)[0].common,
+      region: data.region,
+      subregion: data.subregion,
+      population: data.population,
+      capital: data.capital?.[0],
+      topLevelDomain: data.tld.join(", "),
+      currencies: Object.values(data.currencies)
+        .map((currency) => currency.name)
+        .join(", "),
+      languages: Object.values(data.languages).join(", "),
+      flagImage: data.flags.svg,
+      flagAlt: data.flags.alt,
+      borders: [],
+    });
+    if(!data.borders){
+      data.borders=[];
+    }
+    Promise.all(data.borders.map((border) => {
+      //console.log(border);
+      return fetch(`https://restcountries.com/v3.1/alpha/${border}`)
+        .then((res) => res.json())
+        .then(([borderCounty]) => borderCounty.name.common);
+    })).then((borders) => {
+      setTimeout(() => {  
+        setCountryData((prev) => ({
+          ...prev,
+          borders,
+        }));
+      });
+      //console.log(allBordersName);
+    })
+  }
 
   useEffect(() => {
+   
+    if (state) {
+      updateCountryData(state);
+      return;
+    }
     fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
       .then((res) => res.json())
       .then(([data]) => {
-        setCountryData({
-          name: data.name.common,
-          nativeName: Object.values(data.name.nativeName)[0].common,
-          region: data.region,
-          subregion: data.subregion,
-          population: data.population,
-          capital: data.capital?.[0],
-          topLevelDomain: data.tld.join(", "),
-          currencies: Object.values(data.currencies)
-            .map((currency) => currency.name)
-            .join(", "),
-          languages: Object.values(data.languages).join(", "),
-          flagImage: data.flags.svg,
-          flagAlt: data.flags.alt,
-          borders: [],
-        });
-        if(!data.borders){
-          data.borders=[];
-        }
-        Promise.all(data.borders.map((border) => {
-          //console.log(border);
-          return fetch(`https://restcountries.com/v3.1/alpha/${border}`)
-            .then((res) => res.json())
-            .then(([borderCounty]) => borderCounty.name.common);
-        })).then((borders) => {
-          setCountryData((prev) => ({
-            ...prev,
-            borders,
-          }));
-          //console.log(allBordersName);
-        })
+        updateCountryData(data);
       })
       .catch((error) => {
         console.log(error);
@@ -57,7 +70,7 @@ const CountryDetail = () => {
   return countryData === null ? (
     "Loading........"
   ) : (
-    <main>
+    <main className={`${isDarkMode?'dark':''}`}>
       <div className="country-details-container">
         <Link className="back-button" to="/" onClick={()=>(history.back())}>
           <i className="fa-solid fa-arrow-left"></i>&nbsp; Back
