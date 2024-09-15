@@ -67,5 +67,8 @@
         width: 100%;
         max-width: 400px;
     }
+    .shimmer-card{
+        background-color: #000;
+    }
 
 }

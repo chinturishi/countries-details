@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-const CountyCard = ({name,population,region,capital,flag}) => {
+const CountyCard = ({name,population,region,capital,flag,data}) => {
   return (
     <div className="country-card">
-      <Link to={`/country-detail?name=${name}`}>
+      <Link to={`/${name}`} state={data}>
         <img src={flag} alt={name} />
         <div className="card-text">
           <h3 className="card-title">{name}</h3>
