@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./CountryDetail.css";
 import { Link, useLocation, useOutletContext, useParams } from "react-router-dom";
+import { ThemeContext } from "../contexts/ThemeContext";
+import { useTheme } from "../hooks/useTheme";
 
 const CountryDetail = () => {
   // = new URLSearchParams(location.search).get("name");
@@ -10,7 +12,8 @@ const CountryDetail = () => {
   //console.log(countryName);
   const [countyNotFound, setCountyNotFound] = useState(false);
   const { state } = useLocation();
-  const [isDarkMode, setIsDarkMode] =useOutletContext();
+  //const [isDarkMode, setIsDarkMode] =useOutletContext();
+  const [isDarkMode]=useTheme();
 
   function updateCountryData(data) {
     setCountryData({
