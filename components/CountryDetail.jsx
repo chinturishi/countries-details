@@ -17,17 +17,17 @@ const CountryDetail = () => {
 
   function updateCountryData(data) {
     setCountryData({
-      name: data.name.common,
-      nativeName: Object.values(data.name.nativeName)[0].common,
+      name: data.name.common || {},
+      nativeName: Object.values(data.name.nativeName || {})[0].common,
       region: data.region,
       subregion: data.subregion,
       population: data.population,
       capital: data.capital?.[0],
       topLevelDomain: data.tld.join(", "),
-      currencies: Object.values(data.currencies)
+      currencies: Object.values(data.currencies || {})
         .map((currency) => currency.name)
         .join(", "),
-      languages: Object.values(data.languages).join(", "),
+      languages: Object.values(data.languages || {}).join(", "),
       flagImage: data.flags.svg,
       flagAlt: data.flags.alt,
       borders: [],
